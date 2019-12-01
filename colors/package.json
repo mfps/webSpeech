@@ -1,0 +1,22 @@
+{
+  "name": "colors",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "browserslist": [
+    "last 1 chrome version"
+  ],
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.23.7",
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
+}
