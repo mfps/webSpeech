@@ -1,9 +1,8 @@
-class SpeechRecognition {
-  constructor() {
-    this.words = document.querySelector('.words');
-    this.languages = document.querySelector('.languages');
-    this.init();
-  }
+class SpeechRecognizer {
+  words = document.querySelector(".words");
+  languages = document.querySelector(".languages");
+
+  constructor() {}
 
   init() {
     const recognition = new (window.SpeechRecognition ||
@@ -20,42 +19,38 @@ class SpeechRecognition {
   }
 
   getLanguage(recognition) {
-    let languages = navigator.languages;
-    languages = languages.filter(lang => lang.includes('-'));
+    let languages: string[] = navigator.languages;
+    languages = languages.filter(lang => lang.includes("-"));
 
     const options = languages.map(
-      (element, index) =>
-        this.languages.options[this.languages.options.length] = new Option(
-          element,
-          element
-        )
+      (element, index) => (this.languages.options[this.languages.options.length] = new Option(element, element))
     );
   }
 
   eventHandler(recognition) {
-    this.languages.addEventListener('change', e => {
+    this.languages.addEventListener("change", e => {
       recognition.lang = e.target.value;
     });
 
-    recognition.addEventListener('result', e => {
+    recognition.addEventListener("result", e => {
       const transcript = Array.from(e.results)
         .map(result => result[0])
         .map(result => result.transcript)
-        .join('');
+        .join("");
 
       this.addText(transcript, e.results[0].isFinal);
     });
 
-    recognition.addEventListener('end', recognition.start);
+    recognition.addEventListener("end", recognition.start);
 
-    recognition.addEventListener('error', e => {
+    recognition.addEventListener("error", e => {
       console.log(e);
     });
   }
 
   addText(text, isFinal) {
     const p = this.words.lastElementChild;
-    const poopScript = text.replace(/poop|poo|shit|dump/gi, '💩');
+    const poopScript = text.replace(/poop|poo|shit|dump/gi, "💩");
     p.textContent = poopScript;
 
     if (isFinal) {
@@ -63,12 +58,11 @@ class SpeechRecognition {
     }
   }
 
-  render() {
-    const p = document.createElement('p');
+  private render() {
+    const p = document.createElement("p");
     this.words.appendChild(p);
   }
 }
 
-(() => {
-  new SpeechRecognition();
-})();
+const speechReg = new SpeechRecognizer();
+speechReg.init();
